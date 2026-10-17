@@ -1,36 +1,81 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Student Finance Tracker
+
+A modern finance tracking application built for students to manage their expenses, income, and financial goals.
+
+## Features
+
+- **Dashboard** - Overview of your financial status with charts and summaries
+- **Transactions** - Track income and expenses with categorization
+- **Accounts** - Manage multiple bank accounts and wallets
+- **Categories** - Organize transactions by custom categories
+- **Reports** - Visual financial reports and analytics
+- **AI-Powered Insights** - Get intelligent suggestions for your spending habits
+
+## Tech Stack
+
+- **Framework**: Next.js 15 (App Router)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **Database**: Supabase
+- **Charts**: Recharts
+- **Authentication**: Supabase Auth
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- Node.js 18+
+- npm or yarn
+- Supabase account
+
+### Environment Variables
+
+Create a `.env.local` file in the root directory:
+
+```env
+NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Installation
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+# Install dependencies
+npm install
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# Run development server
+npm run dev
+```
 
-## Learn More
+Open [http://localhost:3000](http://localhost:3000) to view the app.
 
-To learn more about Next.js, take a look at the following resources:
+## Project Structure
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+app/
+├── (dashboard)/          # Dashboard routes (auth required)
+│   ├── accounts/         # Account management
+│   ├── categories/       # Category management
+│   ├── dashboard/        # Main dashboard
+│   ├── reports/          # Financial reports
+│   └── transactions/     # Transaction management
+├── login/                # Authentication pages
+├── layout.tsx            # Root layout
+└── page.tsx              # Home page
+components/
+├── accounts/             # Account components
+├── categories/           # Category components
+├── dashboard/            # Dashboard components
+├── layout/               # Layout components
+├── reports/              # Report components
+├── shared/               # Shared components
+└── transactions/         # Transaction components
+lib/
+├── supabase/             # Supabase client/server utilities
+└── utils.ts              # Utility functions
+types/                    # TypeScript types
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## License
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT
