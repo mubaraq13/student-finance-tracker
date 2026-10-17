@@ -1,26 +1,37 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg-canvas: #F7F8F5;
+  --bg-surface: #FFFFFF;
+  --bg-muted: #EEF1EC;
+  --border-subtle: #DCE1DC;
+  --brand-emerald: #123C32;
+  --brand-emerald-hover: #0D2B24;
+  --accent-lime: #B8D978;
+  --text-primary: #252B28;
+  --text-secondary: #4A5450;
+  --income-text: #123C32;
+  --income-bg: #E3EDE9;
+  --expense-text: #991B1B;
+  --expense-bg: #FCE8E8;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+html,
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--bg-canvas);
+  color: var(--text-primary);
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Motif identitas fintech: setiap angka sejajar presisi */
+.font-num {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Standar Aksesibilitas Keyboard (R-32) */
+*:focus-visible {
+  outline: 2px solid var(--brand-emerald) !important;
+  outline-offset: 2px !important;
 }
