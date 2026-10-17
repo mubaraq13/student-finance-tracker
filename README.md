@@ -673,9 +673,8 @@ Before distributing the project under MIT, add a `LICENSE` file containing the o
 
 **Muhammad dzaky mubaraq**
 
-- GitHub: [mubaraq13](https://github.com/mubaraq13))
-- Project: [Student Finance Tracker](https://github.com/mubaraq13)/student-finance-tracker)
-
+- GitHub: [mubaraq13](https://github.com/mubaraq13)
+- Project: [Student Finance Tracker](https://github.com/mubaraq13)
 Replace the placeholders with your actual profile and repository URLs.
 
 ---
