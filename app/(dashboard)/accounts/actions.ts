@@ -1,67 +1,89 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
+import { revalidatePath } from "next/cache";
 
 export async function addAccount(formData: FormData) {
-  const supabase = await createClient();
-  const name = (formData.get("name") as string)?.trim();
+  try {
+    const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
 
-  if (!name) return;
+    if (!user) {
+      return { error: "Sesi habis. Silakan login kembali." };
+    }
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) throw new Error("Unauthorized");
+    const name = formData.get("name") as string;
+    const type = formData.get("type") as string;
+    
+    // FIX: Ambil nilai dengan benar dan pastikan menjadi angka murni
+    const initial_balance_str = formData.get("initial_balance");
+    const initial_balance = initial_balance_str ? Number(initial_balance_str) : 0;
 
-  const { error } = await supabase.from("accounts").insert({
-    user_id: user.id,
-    name,
-  });
+    const { error } = await supabase.from("accounts").insert({
+      user_id: user.id,
+      name,
+      type,
+      initial_balance, // Kirim sebagai angka
+    });
 
-  if (error) {
-    console.error("Error adding account:", error.message);
-    return;
+    if (error) throw error;
+
+    revalidatePath("/accounts");
+    revalidatePath("/dashboard");
+    revalidatePath("/transactions");
+
+    return { success: true };
+  } catch (error: any) {
+    return { error: error.message };
   }
-
-  revalidatePath("/accounts");
-  revalidatePath("/transactions");
-  revalidatePath("/dashboard");
 }
 
 export async function updateAccount(formData: FormData) {
-  const supabase = await createClient();
-  const id = formData.get("id") as string;
-  const name = (formData.get("name") as string)?.trim();
+  try {
+    const supabase = await createClient();
+    
+    const id = formData.get("id") as string;
+    const name = formData.get("name") as string;
+    const type = formData.get("type") as string;
+    
+    // FIX: Ambil nilai dengan benar dan pastikan menjadi angka murni
+    const initial_balance_str = formData.get("initial_balance");
+    const initial_balance = initial_balance_str ? Number(initial_balance_str) : 0;
 
-  if (!id || !name) return;
+    const { error } = await supabase
+      .from("accounts")
+      .update({
+        name,
+        type,
+        initial_balance, // Update sebagai angka
+      })
+      .eq("id", id);
 
-  const { error } = await supabase
-    .from("accounts")
-    .update({ name })
-    .eq("id", id);
+    if (error) throw error;
 
-  if (error) {
-    console.error("Error updating account:", error.message);
-    return;
+    revalidatePath("/accounts");
+    revalidatePath("/dashboard");
+    revalidatePath("/transactions");
+
+    return { success: true };
+  } catch (error: any) {
+    return { error: error.message };
   }
-
-  revalidatePath("/accounts");
-  revalidatePath("/transactions");
-  revalidatePath("/dashboard");
 }
 
 export async function deleteAccount(id: string) {
-  const supabase = await createClient();
+  try {
+    const supabase = await createClient();
 
-  const { error } = await supabase.from("accounts").delete().eq("id", id);
+    const { error } = await supabase.from("accounts").delete().eq("id", id);
+    if (error) throw error;
 
-  if (error) {
-    console.error("Error deleting account:", error.message);
-    return;
+    revalidatePath("/accounts");
+    revalidatePath("/dashboard");
+    revalidatePath("/transactions");
+
+    return { success: true };
+  } catch (error: any) {
+    return { error: error.message };
   }
-
-  revalidatePath("/accounts");
-  revalidatePath("/transactions");
-  revalidatePath("/dashboard");
 }
